@@ -21,7 +21,10 @@ define('KSF_PORTAL_URL', plugin_dir_url(__FILE__));
 require_once KSF_PORTAL_PATH . 'includes/class-ksf-portal-autoloader.php';
 require_once KSF_PORTAL_PATH . 'includes/class-ksf-portal-api.php';
 require_once KSF_PORTAL_PATH . 'includes/class-ksf-portal-auth.php';
-require_once KSF_PORTAL_PATH . 'includes/class-ksf-portal Shortcodes.php';
+require_once KSF_PORTAL_PATH . 'includes/class-ksf-portal-shortcodes.php';
+require_once KSF_PORTAL_PATH . 'includes/class-ksf-portal-announcements.php';
+require_once KSF_PORTAL_PATH . 'includes/services/class-ksf-woo-sync.php';
+require_once KSF_PORTAL_PATH . 'includes/services/class-ksf-salesman-approval.php';
 
 class KSF_Customer_Portal
 {
@@ -47,6 +50,9 @@ class KSF_Customer_Portal
         add_shortcode('ksf_portal_invoices', [KSF_Portal_Shortcodes::class, 'render_invoices']);
         add_shortcode('ksf_portal_orders', [KSF_Portal_Shortcodes::class, 'render_orders']);
         add_shortcode('ksf_portal_ticket_form', [KSF_Portal_Shortcodes::class, 'render_ticket_form']);
+        add_shortcode('ksf_portal_announcements', [KSF_Portal_Shortcodes::class, 'render_announcements']);
+        add_shortcode('ksf_portal_profile', [KSF_Portal_Shortcodes::class, 'render_profile']);
+        add_shortcode('ksf_portal_documents', [KSF_Portal_Shortcodes::class, 'render_documents']);
     }
 
     public function register_rest_routes()
@@ -96,6 +102,54 @@ class KSF_Customer_Portal
         register_rest_route('ksf-portal/v1', '/profile', [
             'methods' => 'GET',
             'callback' => [KSF_Portal_API::class, 'get_profile'],
+            'permission_callback' => [KSF_Portal_API::class, 'check_auth'],
+        ]);
+
+        register_rest_route('ksf-portal/v1', '/profile', [
+            'methods' => 'PUT',
+            'callback' => [KSF_Portal_API::class, 'update_profile'],
+            'permission_callback' => [KSF_Portal_API::class, 'check_auth'],
+        ]);
+
+        register_rest_route('ksf-portal/v1', '/announcements', [
+            'methods' => 'GET',
+            'callback' => [KSF_Portal_API::class, 'get_announcements'],
+            'permission_callback' => [KSF_Portal_API::class, 'check_auth'],
+        ]);
+
+        register_rest_route('ksf-portal/v1', '/documents', [
+            'methods' => 'GET',
+            'callback' => [KSF_Portal_API::class, 'get_documents'],
+            'permission_callback' => [KSF_Portal_API::class, 'check_auth'],
+        ]);
+
+        register_rest_route('ksf-portal/v1', '/password/reset', [
+            'methods' => 'POST',
+            'callback' => [KSF_Portal_API::class, 'reset_password'],
+            'permission_callback' => '__return_true',
+        ]);
+
+        register_rest_route('ksf-portal/v1', '/woo/sync', [
+            'methods' => 'POST',
+            'callback' => [Ksfraser\WooCommerce\WooCommerceSyncService::class, 'sync_customer_to_woo'],
+            'permission_callback' => [KSF_Portal_API::class, 'check_auth'],
+        ]);
+
+        register_rest_route('ksf-portal/v1', '/woo/orders', [
+            'methods' => 'GET',
+            'callback' => [Ksfraser\WooCommerce\WooCommerceSyncService::class, 'sync_orders_to_woo'],
+            'permission_callback' => [KSF_Portal_API::class, 'check_auth'],
+        ]);
+
+        register_rest_route('ksf-portal/v1', '/woo/invoices', [
+            'methods' => 'GET',
+            'callback' => [Ksfraser\WooCommerce\WooCommerceSyncService::class, 'sync_invoices_to_woo'],
+            'permission_callback' => [KSF_Portal_API::class, 'check_auth'],
+        ]);
+
+        register_rest_route('ksf-portal/v1', '/approvals', [
+            'methods' => 'GET',
+            'callback' => [Ksfraser\Salesman\SalesmanApprovalService::class, 'get_pending_tasks'],
             'permission_callback' => [KSF_Portal_API::class, 'check_auth'],
         ]);
     }
