@@ -247,7 +247,7 @@
 1. Customer views ticket detail
 2. Customer enters note text
 3. Customer submits note
-4. API inserts note into fa_st_tickets_notes
+4. API inserts note into ksf_supporttickets_tickets_notes
 5. Note appears in ticket timeline
 
 ---
@@ -443,7 +443,7 @@
 1. Customer submits change request
 2. System calls SalesmanApprovalService
 3. Service gets assigned salesman from FA
-4. Service creates task in fa_approval_tasks
+4. Service creates task in ksf_customerportal_approval_tasks
 5. Service notifies salesman via email
 6. Task appears in salesman's queue
 

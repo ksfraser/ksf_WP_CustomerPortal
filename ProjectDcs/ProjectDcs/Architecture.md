@@ -347,13 +347,13 @@ Return sync result
 | Table | Purpose | Access |
 |-------|---------|--------|
 | `debtors_master` | Customer records | Read/Write |
-| `fa_st_tickets` | Support tickets | Read/Write |
-| `fa_st_tickets_notes` | Ticket notes | Read/Write |
+| `ksf_supporttickets_tickets` | Support tickets | Read/Write |
+| `ksf_supporttickets_tickets_notes` | Ticket notes | Read/Write |
 | `debtor_trans` | Invoices/transactions | Read |
 | `sales_orders` | Sales orders | Read |
-| `fa_announcements` | System announcements | Read |
-| `fa_customer_documents` | Customer documents | Read |
-| `fa_approval_tasks` | Approval workflow | Read/Write |
+| `ksf_customerportal_announcements` | System announcements | Read |
+| `ksf_customerportal_customer_documents` | Customer documents | Read |
+| `ksf_customerportal_approval_tasks` | Approval workflow | Read/Write |
 
 ### 5.2 WordPress Tables (Used)
 

@@ -32,7 +32,7 @@ class SalesmanApprovalService
         $task_no = 'APR-' . date('Ymd') . '-' . str_pad((time() % 10000), 4, '0', STR_PAD_LEFT);
         $requested_by = get_userdata($requesting_user_id)->user_login;
 
-        $sql = "INSERT INTO " . TB_PREF . "fa_approval_tasks
+        $sql = "INSERT INTO " . TB_PREF . "ksf_customerportal_approval_tasks
             (task_no, type, entity_no, data_json, status, requested_by, assigned_to, created_at)
             VALUES (
                 " . db_escape($task_no) . ",
@@ -62,7 +62,7 @@ class SalesmanApprovalService
     {
         $this->init_fa();
 
-        $sql = "SELECT * FROM " . TB_PREF . "fa_approval_tasks 
+        $sql = "SELECT * FROM " . TB_PREF . "ksf_customerportal_approval_tasks 
             WHERE assigned_to = " . db_escape($salesman_username) . "
             AND status = 'Pending'
             ORDER BY created_at DESC";
@@ -99,7 +99,7 @@ class SalesmanApprovalService
     {
         $this->init_fa();
 
-        $sql = "UPDATE " . TB_PREF . "fa_approval_tasks
+        $sql = "UPDATE " . TB_PREF . "ksf_customerportal_approval_tasks
             SET status = " . db_escape($status) . ",
                 comments = " . db_escape($comments) . ",
                 processed_by = " . db_escape($salesman_username) . ",
@@ -109,7 +109,7 @@ class SalesmanApprovalService
 
         db_query($sql, "Could not update task");
 
-        $sql = "SELECT type, entity_no, data_json FROM " . TB_PREF . "fa_approval_tasks
+        $sql = "SELECT type, entity_no, data_json FROM " . TB_PREF . "ksf_customerportal_approval_tasks
             WHERE task_no = " . db_escape($task_no);
         $result = db_query($sql, "Could not get task");
         $task = db_fetch_assoc($result);

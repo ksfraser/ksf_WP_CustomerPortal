@@ -101,7 +101,7 @@ class KSF_Portal_API
 
         include_once $fa_path . '/includes/db.inc';
 
-        $sql = "SELECT * FROM " . TB_PREF . "fa_st_tickets 
+        $sql = "SELECT * FROM " . TB_PREF . "ksf_supporttickets_tickets 
             WHERE debtor_no = " . db_escape($debtor_no) . "
             ORDER BY created_at DESC LIMIT 50";
 
@@ -135,7 +135,7 @@ class KSF_Portal_API
 
         include_once $fa_path . '/includes/db.inc';
 
-        $sql = "SELECT * FROM " . TB_PREF . "fa_st_tickets 
+        $sql = "SELECT * FROM " . TB_PREF . "ksf_supporttickets_tickets 
             WHERE id = " . db_escape($id) . " AND debtor_no = " . db_escape($debtor_no);
 
         $result = db_query($sql, "Could not get ticket");
@@ -145,7 +145,7 @@ class KSF_Portal_API
             return new WP_Error('not_found', 'Ticket not found', ['status' => 404]);
         }
 
-        $notes_sql = "SELECT * FROM " . TB_PREF . "fa_st_tickets_notes 
+        $notes_sql = "SELECT * FROM " . TB_PREF . "ksf_supporttickets_tickets_notes 
             WHERE ticket_id = " . db_escape($id) . " ORDER BY created_at DESC";
         
         $notes_result = db_query($notes_sql, "Could not get notes");
@@ -195,7 +195,7 @@ class KSF_Portal_API
         $ticket_number = 'TKT-' . date('Ymd') . '-' . str_pad((time() % 10000), 4, '0', STR_PAD_LEFT);
         $user = wp_get_current_user();
 
-        $sql = "INSERT INTO " . TB_PREF . "fa_st_tickets
+        $sql = "INSERT INTO " . TB_PREF . "ksf_supporttickets_tickets
             (ticket_number, subject, description, type, priority, status, debtor_no, created_by)
             VALUES (" . db_escape($ticket_number) . ",
                 " . db_escape($subject) . ",
@@ -236,7 +236,7 @@ class KSF_Portal_API
 
         $user = wp_get_current_user();
 
-        $sql = "INSERT INTO " . TB_PREF . "fa_st_tickets_notes
+        $sql = "INSERT INTO " . TB_PREF . "ksf_supporttickets_tickets_notes
             (ticket_id, note, note_type, created_by)
             VALUES (" . db_escape($id) . ",
                 " . db_escape($note) . ",
@@ -416,7 +416,7 @@ class KSF_Portal_API
 
         include_once $fa_path . '/includes/db.inc';
 
-        $sql = "SELECT * FROM " . TB_PREF . "fa_announcements 
+        $sql = "SELECT * FROM " . TB_PREF . "ksf_customerportal_announcements 
             WHERE active = 1 
             AND (expiry_date IS NULL OR expiry_date >= CURDATE())
             ORDER BY created_at DESC 

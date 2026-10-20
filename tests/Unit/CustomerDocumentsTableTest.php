@@ -7,8 +7,8 @@ namespace Ksfraser\Tests\Unit\CustomerPortal;
 use PHPUnit\Framework\TestCase;
 
 /**
- * The portal's document list read `TB_PREF . "fa_customer_documents"`, i.e.
- * `0_fa_customer_documents`. That table is created by no schema in the
+ * The portal's document list read `TB_PREF . "ksf_customerportal_customer_documents"`, i.e.
+ * `0_ksf_customerportal_customer_documents`. That table is created by no schema in the
  * estate, so the query failed with MySQL error 1146 and the portal's
  * Documents tab was permanently empty.
  *
@@ -31,9 +31,9 @@ class CustomerDocumentsTableTest extends TestCase
         $contents = (string) file_get_contents($this->moduleDir . '/includes/class-ksf-portal-api.php');
 
         $this->assertStringNotContainsString(
-            'fa_customer_documents',
+            'ksf_customerportal_customer_documents',
             $contents,
-            'the portal must not address 0_fa_customer_documents: no schema creates it'
+            'the portal must not address 0_ksf_customerportal_customer_documents: no schema creates it'
         );
     }
 

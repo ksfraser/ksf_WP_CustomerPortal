@@ -22,7 +22,7 @@ class KSF_Portal_Announcements
     {
         $this->init_fa();
 
-        $sql = "SELECT * FROM " . TB_PREF . "fa_announcements 
+        $sql = "SELECT * FROM " . TB_PREF . "ksf_customerportal_announcements 
             WHERE active = 1 
             AND (expiry_date IS NULL OR expiry_date >= CURDATE())
             ORDER BY created_at DESC 
@@ -50,7 +50,7 @@ class KSF_Portal_Announcements
     {
         $this->init_fa();
 
-        $sql = "SELECT * FROM " . TB_PREF . "fa_announcements 
+        $sql = "SELECT * FROM " . TB_PREF . "ksf_customerportal_announcements 
             WHERE id = " . db_escape($id) . " AND active = 1";
 
         $result = db_query($sql, "Could not get announcement");
@@ -63,9 +63,9 @@ class KSF_Portal_Announcements
     {
         $this->init_fa();
 
-        $id = db_insert(TB_PREF . "fa_announcements");
+        $id = db_insert(TB_PREF . "ksf_customerportal_announcements");
         
-        $sql = "INSERT INTO " . TB_PREF . "fa_announcements
+        $sql = "INSERT INTO " . TB_PREF . "ksf_customerportal_announcements
             (id, title, content, target_type, target_value, priority, active, created_by, created_at)
             VALUES (
                 " . db_escape($id) . ",
@@ -100,7 +100,7 @@ class KSF_Portal_Announcements
     {
         $this->init_fa();
 
-        $sql = "SELECT COUNT(*) as cnt FROM " . TB_PREF . "fa_announcement_targets
+        $sql = "SELECT COUNT(*) as cnt FROM " . TB_PREF . "ksf_customerportal_announcement_targets
             WHERE announcement_id = " . db_escape($announcement_id) . "
             AND debtor_no = " . db_escape($debtor_no);
 

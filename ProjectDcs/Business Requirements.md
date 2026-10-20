@@ -244,7 +244,7 @@ KSF_Portal_API::create_ticket()
     │
     ├── Generate ticket_number
     │
-    ├── Insert into fa_st_tickets
+    ├── Insert into ksf_supporttickets_tickets
     │
     ▼
 Return ticket details
