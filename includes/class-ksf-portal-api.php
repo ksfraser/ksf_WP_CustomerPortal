@@ -455,7 +455,7 @@ class KSF_Portal_API
 
         include_once $fa_path . '/includes/db.inc';
 
-        $sql = "SELECT * FROM " . TB_PREF . "fa_customer_documents 
+        $sql = "SELECT * FROM " . TB_PREF . "ksf_customerportal_customer_documents 
             WHERE debtor_no = " . db_escape($debtor_no) . "
             ORDER BY created_at DESC LIMIT 50";
 
